@@ -55,7 +55,7 @@
 
 #define create_list(list)													\
 	do {																	\
-		list = *(typeof(list)*)LIST_MALLOC(sizeof(typeof(list)));				\
+		list = (typeof(list))LIST_MALLOC(sizeof(typeof(list)));				\
 		(list)->length = 0;													\
 		(list)->head = NULL;												\
 	} while (0)
