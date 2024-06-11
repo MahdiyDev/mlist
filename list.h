@@ -29,6 +29,7 @@
 	do {																	\
 		LIST_ASSERT(prev != NULL && "prev is NULL");						\
 		typeof(item)* new_node = new_item(&item);							\
+		LIST_ASSERT(new_node != NULL && "Buy more RAM...");					\
 		*new_node = item;													\
 		new_node->next = prev->next;										\
 		prev->next = new_node;												\
@@ -56,6 +57,7 @@
 #define create_list(list)													\
 	do {																	\
 		list = (typeof(list))LIST_MALLOC(sizeof(typeof(list)));				\
+		LIST_ASSERT(list != NULL && "Buy more RAM...");					\
 		(list)->length = 0;													\
 		(list)->head = NULL;												\
 	} while (0)
