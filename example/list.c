@@ -19,7 +19,7 @@ int main (int argc, char** argv)
 {
 	printf("__________________List in c__________________\n");
 
-	List* list;
+	List list = {};
 	create_list(list);
 
 	list_push(list, ((ListItem) {
@@ -40,11 +40,12 @@ int main (int argc, char** argv)
 		}));
 	}
 
-	printf("List length: %d\n", list->length);
-	ListItem* item = list->head;
-	for (int i = 0; i < list->length; i++) {
-		printf("Value[%d]: %d\n", i, item->value);
-		printf("Value[%d]: %d\n", i, item->count);
+	printf("List length: %d\n", list.length);
+	ListItem* item = list.head;
+	for (int i = 0; i < list.length; i++) {
+		printf("Item[%d]\n", i);
+		printf("  Value: %d\n", item->value);
+		printf("  Count: %d\n", item->count);
 		item = item->next;
 	}
 

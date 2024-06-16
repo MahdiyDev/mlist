@@ -16,18 +16,18 @@ typedef struct {
 
 int main(int argc, char** argv)
 {
-    List* list;
+    List list = { 0 };
     create_list(list);
 
     for (int i = 0; i < 10; i++) {
         list_push(list, (ListItem) { .value = i });
         if (i == 5) {
-            list_insert_after(list, list->head, (ListItem) { .value = 47 });
+            list_insert_after(list, list.head, (ListItem) { .value = 47 });
         }
     }
 
-    ListItem* currentItem = list->head;
-    for (int i = 0; i < list->length; i++) {
+    ListItem* currentItem = list.head;
+    for (int i = 0; i < list.length; i++) {
         printf("%d", currentItem->value);
         if (currentItem->next) {
             printf(" -> ");
@@ -38,7 +38,7 @@ int main(int argc, char** argv)
     }
     printf("\n");
 
-    free_list(list);
+	free_list(list);
 
     return 0;
 }
