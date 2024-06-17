@@ -20,9 +20,9 @@
 		typeof(item)* new_node = new_item(item);							\
 		LIST_ASSERT(new_node != NULL && "Buy more RAM...");					\
 		*new_node = item;													\
-		new_node->next = (list).head;										\
-		(list).head = new_node;												\
-		(list).length++;			 										\
+		new_node->next = (list)->head;										\
+		(list)->head = new_node;											\
+		(list)->length++;			 										\
 	} while (0)
 
 #define list_insert_after(list, prev, item) 								\
@@ -33,7 +33,7 @@
 		*new_node = item;													\
 		new_node->next = prev->next;										\
 		prev->next = new_node;												\
-		(list).length++;													\
+		(list)->length++;													\
 	} while (0)
 
 #define list_append(list, item)												\
@@ -42,32 +42,34 @@
 		LIST_ASSERT(new_node != NULL && "Buy more RAM...");					\
 		*new_node = item;													\
 		new_node->next = NULL;												\
-		if ((list).head == NULL) {											\
-			(list).head = new_node;											\
+		if ((list)->head == NULL) {											\
+			(list)->head = new_node;										\
 		} else {															\
-			typeof(item)* current = (list).head;							\
+			typeof(item)* current = (list)->head;							\
 			while (current->next != NULL) {									\
 				current = current->next;									\
 			}																\
 			current->next = new_node;										\
 		}																	\
-		(list).length++;													\
+		(list)->length++;													\
 	} while (0)
 
 #define create_list(list)													\
 	do {																	\
-		(list).length = 0;													\
-		(list).head = NULL;													\
+		typeof(list) new_list = (typeof(list))LIST_MALLOC(sizeof(typeof(*list)));	\
+		LIST_ASSERT(new_list != NULL && "Buy more RAM...");					\
+		list = new_list;													\
+		(list)->length = 0;													\
+		(list)->head = NULL;												\
 	} while (0)
 
 #define free_list(list)						 								\
 	do {																	\
-		typeof(list.head) item = list.head;									\
-		for (int i = 0; i < list.length; i++) {								\
-			list.head = item->next;											\
+		typeof(list->head) item = list->head;								\
+		for (int i = 0; i < list->length; i++) {							\
+			list->head = item->next;										\
 			LIST_FREE(item);												\
-			item = list.head;												\
+			item = list->head;												\
 		}																	\
-		(list).length = 0;													\
-		(list).head = NULL;													\
+		LIST_FREE(list);													\
 	} while (0)
