@@ -65,11 +65,14 @@
 
 #define free_list(list)						 								\
 	do {																	\
-		typeof(list->head) item = list->head;								\
-		for (int i = 0; i < list->length; i++) {							\
-			list->head = item->next;										\
-			LIST_FREE(item);												\
-			item = list->head;												\
+		if (list->head != NULL) {											\
+			typeof(list->head) item = list->head;							\
+			typeof(list->head) item_tmp;									\
+			while ((list->length--) > 0) {						\
+				item_tmp = item->next;										\
+				LIST_FREE(item);											\
+				item = item_tmp;											\
+			}																\
 		}																	\
 		LIST_FREE(list);													\
 	} while (0)
