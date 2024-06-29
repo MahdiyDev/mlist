@@ -54,6 +54,21 @@
 		(list)->length++;													\
 	} while (0)
 
+#define list_remove(list, index)	\
+		do {																\
+			typeof((list)->head) current = (list)->head;					\
+			typeof((list)->head) before_current = current;					\
+			for (unsigned int _i = 0; _i < index; _i++) {					\
+				if (current->next == NULL) { break; }						\
+				before_current = current;									\
+				current = current->next;									\
+			}																\
+			before_current->next = current->next;							\
+			LIST_FREE(current);												\
+			current = NULL;													\
+			list->length--;													\
+		} while(0)
+
 #define create_list(list)													\
 	do {																	\
 		typeof(list) new_list = (typeof(list))LIST_MALLOC(sizeof(typeof(*list)));	\

@@ -33,6 +33,13 @@ int main (int argc, char** argv)
 	};
 	list_append(list, l);
 
+	{
+		ListItem lop = {
+                	.value = 23,
+                	.count = 2
+        	};
+	}
+
 	for (int i = 0; i < 10; i++) {
 		list_append(list, ((ListItem) {
 			.value = 1+i,

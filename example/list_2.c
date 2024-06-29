@@ -14,18 +14,8 @@ typedef struct {
     ListItem* head;
 } List;
 
-int main(int argc, char** argv)
+void print_list(List* list)
 {
-    List* list;
-    create_list(list);
-
-    for (int i = 0; i < 10; i++) {
-        list_push(list, (ListItem) { .value = i });
-        if (i == 5) {
-            list_insert_after(list, list->head, (ListItem) { .value = 47 });
-        }
-    }
-
     ListItem* currentItem = list->head;
     for (int i = 0; i < list->length; i++) {
         printf("%d", currentItem->value);
@@ -37,6 +27,24 @@ int main(int argc, char** argv)
         }
     }
     printf("\n");
+}
+
+int main(int argc, char** argv)
+{
+    List* list;
+    create_list(list);
+
+    for (int i = 0; i < 10; i++) {
+        list_push(list, (ListItem) { .value = i });
+        if (i == 5) {
+            list_insert_after(list, list->head, (ListItem) { .value = 47 });
+        }
+    }
+	print_list(list);
+
+	list_remove(list, 2);
+	
+	print_list(list);
 
 	free_list(list);
 
