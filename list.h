@@ -36,6 +36,19 @@
 		(list)->length++;													\
 	} while (0)
 
+#define list_to_array(list, data) \
+	do {																	\
+		data = LIST_MALLOC(list->length * sizeof(typeof(*data)));			\
+		typeof(data) current = (list)->head;								\
+		for (unsigned int _i = 0; _i < list->length; _i++) {				\
+			data[_i] = *current;											\
+			current = current->next;										\
+		}																	\
+	} while (0)
+
+#define free_list_array(data)						 						\
+		LIST_FREE(data);
+
 #define list_append(list, item)												\
 	do {																	\
 		typeof(item)* new_node = new_item(item);							\
@@ -54,7 +67,7 @@
 		(list)->length++;													\
 	} while (0)
 
-#define list_remove(list, index)	\
+#define list_remove(list, index)											\
 		do {																\
 			typeof((list)->head) current = (list)->head;					\
 			typeof((list)->head) before_current = current;					\
@@ -83,7 +96,7 @@
 		if (list->head != NULL) {											\
 			typeof(list->head) item = list->head;							\
 			typeof(list->head) item_tmp;									\
-			while ((list->length--) > 0) {						\
+			while ((list->length--) > 0) {									\
 				item_tmp = item->next;										\
 				LIST_FREE(item);											\
 				item = item_tmp;											\
